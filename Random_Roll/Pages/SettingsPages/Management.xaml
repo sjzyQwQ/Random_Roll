@@ -7,8 +7,24 @@
       xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
       xmlns:local="clr-namespace:Random_Roll.Pages.SettingsPages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="450" d:DesignWidth="800"
+      Loaded="Management_Loaded">
     <Grid>
-        
+        <ui:ScrollViewerEx HorizontalScrollBarVisibility="Auto">
+            <ikw:SimpleStackPanel Margin="24">
+                <ui:ListView x:Name="Names" SelectionMode="Extended"/>
+                <ikw:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="Refresh_Button" Margin="8" Click="Refresh_Button_Click">
+                        <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Refresh}" Content="刷新"/>
+                    </Button>
+                    <Button x:Name="SelectAll_Button" Margin="8" Click="SelectAll_Button_Click">
+                        <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.SelectAll}" Content="全选"/>
+                    </Button>
+                    <Button x:Name="DeletePerson_Button" Style="{StaticResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}" Margin="8" Click="DeletePerson_Button_Click">
+                        <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Delete}" Content="删除"/>
+                    </Button>
+                </ikw:SimpleStackPanel>
+            </ikw:SimpleStackPanel>
+        </ui:ScrollViewerEx>
     </Grid>
 </ui:Page>
