@@ -23,6 +23,9 @@ namespace Random_Roll
             InitializeComponent();
         }
 
+        #region NavigationView_Root
+        public Pages.Home Page_Home = new Pages.Home();
+        public Pages.Settings Page_Settings = new Pages.Settings();
         public Pages.About Page_About = new Pages.About();
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -32,11 +35,11 @@ namespace Random_Roll
 
             if (item == NavigationViewItem_Home)
             {
-                //page = Page_Home;
+                page = Page_Home;
             }
             else if (item == NavigationViewItem_Settings)
             {
-                //page = Page_Settings;
+                page = Page_Settings;
             }
             else if (item == NavigationViewItem_About)
             {
@@ -54,5 +57,6 @@ namespace Random_Roll
         {
             NavigationView_Root.SelectedItem = NavigationViewItem_Home;
         }
+        #endregion
     }
 }
