@@ -59,11 +59,46 @@ namespace Random_Roll.Pages.SettingsPages
             Names.SelectAll();
         }
 
-        // 刷新姓名列表
+        // 刷新列表
         private async void Refresh_Button_Click(object sender, RoutedEventArgs e)
         {
             Names.Items.Clear();
             await ListPerson();
+        }
+
+        // 新增
+        private void NewPerson_Button_Click(object sender, RoutedEventArgs e)
+        {
+            NewPerson_Button.Visibility = Visibility.Collapsed;
+            NewPerson_Name.Visibility = Visibility.Visible;
+            NewPerson_Save_Button.Visibility = Visibility.Visible;
+            NewPerson_Cancel_Button.Visibility = Visibility.Visible;
+        }
+
+        // 保存
+        private async void NewPerson_Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            NewPerson_Save_Button.Visibility = Visibility.Collapsed;
+            NewPerson_Cancel_Button.Visibility = Visibility.Collapsed;
+            NewPerson_Name.Visibility = Visibility.Collapsed;
+            NewPerson_Button.Visibility = Visibility.Visible;
+            foreach(string name in NewPerson_Name.Text.Split(Environment.NewLine))
+            {
+                Database.NewPerson(name);
+            }
+            NewPerson_Name.Text = string.Empty;
+            Names.Items.Clear();
+            await ListPerson();
+        }
+
+        // 取消
+        private void NewPerson_Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            NewPerson_Save_Button.Visibility = Visibility.Collapsed;
+            NewPerson_Cancel_Button.Visibility = Visibility.Collapsed;
+            NewPerson_Name.Visibility = Visibility.Collapsed;
+            NewPerson_Button.Visibility = Visibility.Visible;
+            NewPerson_Name.Text = string.Empty;
         }
     }
 }

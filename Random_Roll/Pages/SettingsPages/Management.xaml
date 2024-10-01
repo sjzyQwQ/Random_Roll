@@ -13,7 +13,17 @@
         <ui:ScrollViewerEx HorizontalScrollBarVisibility="Auto">
             <ikw:SimpleStackPanel Margin="24">
                 <ui:ListView x:Name="Names" SelectionMode="Extended"/>
+                <TextBox x:Name="NewPerson_Name" AcceptsReturn="true" Visibility="Collapsed"/>
                 <ikw:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="NewPerson_Cancel_Button" Margin="8" Click="NewPerson_Cancel_Button_Click" Visibility="Collapsed">
+                        <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Cancel}" Content="取消"/>
+                    </Button>
+                    <Button x:Name="NewPerson_Save_Button" Margin="8" Click="NewPerson_Save_Button_Click" Visibility="Collapsed">
+                        <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Save}" Content="保存"/>
+                    </Button>
+                    <Button x:Name="NewPerson_Button" Margin="8" Click="NewPerson_Button_Click">
+                        <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Add}" Content="添加"/>
+                    </Button>
                     <Button x:Name="Refresh_Button" Margin="8" Click="Refresh_Button_Click">
                         <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Refresh}" Content="刷新"/>
                     </Button>
