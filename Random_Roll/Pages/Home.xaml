@@ -7,10 +7,18 @@
       xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
       xmlns:local="clr-namespace:Random_Roll.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="450" d:DesignWidth="800"
+      Loaded="Page_Loaded">
     <Grid>
-        <Button Style="{StaticResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}" IsDefault="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="16">
-            <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.SearchMedium}" Content="开始抽选"/>
+        <ui:ScrollViewerEx Margin="0,0,0,64">
+            <ikw:SimpleStackPanel Margin="16">
+                <TextBlock x:Name="Statistics" Text="请单击" FontSize="24" FontWeight="SemiBold"/>
+                <TextBlock x:Name="NameBlock" Text="“开始抽选”" FontSize="36" FontWeight="Bold" TextWrapping="Wrap"/>
+            </ikw:SimpleStackPanel>
+        </ui:ScrollViewerEx>
+        <ui:NumberBox x:Name="Count" Value="1" Minimum="1" SmallChange="1" LargeChange="5" Margin="16" SpinButtonPlacementMode="Inline" ValidationMode="InvalidInputOverwritten" ValueChanged="Count_ValueChanged" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <Button x:Name="Start_Roll" Style="{StaticResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}" IsDefault="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="16" Click="Start_Roll_Click">
+            <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Search}" Content="开始抽选"/>
         </Button>
     </Grid>
 </ui:Page>

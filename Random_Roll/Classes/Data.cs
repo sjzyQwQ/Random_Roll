@@ -21,7 +21,7 @@ namespace Random_Roll.Classes
             connection.Close();
         }
 
-        // 添加姓名
+        // 添加
         internal static void NewPerson(string name)
         {
             connection.Open();
@@ -35,7 +35,7 @@ namespace Random_Roll.Classes
             connection.Close();
         }
 
-        // 删除姓名
+        // 删除
         internal static void DeletePerson(string guid)
         {
             connection.Open();
@@ -43,6 +43,34 @@ namespace Random_Roll.Classes
             command.Parameters.AddWithValue("$guid", guid);
             command.ExecuteNonQuery();
             connection.Close();
+        }
+
+        // 查询总数
+        internal static int GetCount()
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(@"SELECT COUNT(*) FROM person", Database.connection);
+            SqliteDataReader dataReader = command.ExecuteReader();
+            int count = 0;
+            while (dataReader.Read())
+            {
+                count = dataReader.GetInt32(0);
+            }
+            connection.Close();
+            return count;
+        }
+    }
+
+    internal class Person
+    {
+        internal int Id { get; set; }
+        internal string Name { get; set; }
+        internal string Guid { get; set; }
+
+        internal Person(string name, string guid)
+        {
+            Name = name;
+            Guid = guid;
         }
     }
 }

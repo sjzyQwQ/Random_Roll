@@ -1,7 +1,8 @@
-﻿using iNKORE.UI.WPF.Modern.Controls;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using Random_Roll.Classes;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Random_Roll.Pages.SettingsPages
@@ -31,7 +32,7 @@ namespace Random_Roll.Pages.SettingsPages
             var dataReader = await command.ExecuteReaderAsync();
             while (await dataReader.ReadAsync())
             {
-                ListViewItem newPerson = new ListViewItem
+                iNKORE.UI.WPF.Modern.Controls.ListViewItem newPerson = new iNKORE.UI.WPF.Modern.Controls.ListViewItem
                 {
                     Tag = dataReader["guid"].ToString().Replace("-", "_"),
                     Content = dataReader["name"]
@@ -44,7 +45,7 @@ namespace Random_Roll.Pages.SettingsPages
         // 删除
         private async void DeletePerson_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            foreach (ListViewItem item in Names.SelectedItems)
+            foreach (iNKORE.UI.WPF.Modern.Controls.ListViewItem item in Names.SelectedItems)
             {
                 Database.DeletePerson(item.Tag.ToString().Replace("_", "-"));
             }
@@ -99,6 +100,20 @@ namespace Random_Roll.Pages.SettingsPages
             NewPerson_Name.Visibility = Visibility.Collapsed;
             NewPerson_Button.Visibility = Visibility.Visible;
             NewPerson_Name.Text = string.Empty;
+        }
+
+        // 解决因SimpleStackPanel(ui)嵌套ListView(ui)和TextBox导致滚轮事件失效的问题
+        private void UI_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
         }
     }
 }
