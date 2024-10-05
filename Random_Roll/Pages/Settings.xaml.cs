@@ -15,6 +15,7 @@ namespace Random_Roll.Pages
 
         #region NavigationView_Settings
         public Pages.SettingsPages.Management Page_Management = new SettingsPages.Management();
+        public Pages.SettingsPages.Statistic Page_Statistic = new SettingsPages.Statistic();
 
         private void NavigationView_Settings_SelectionChanged(iNKORE.UI.WPF.Modern.Controls.NavigationView sender, iNKORE.UI.WPF.Modern.Controls.NavigationViewSelectionChangedEventArgs args)
         {
@@ -24,6 +25,10 @@ namespace Random_Roll.Pages
             if (item == NavigationViewItem_Settings_Management)
             {
                 page = Page_Management;
+            }
+            else if (item == NavigationViewItem_Settings_Statistic)
+            {
+                page = Page_Statistic;
             }
 
             if (page != null)

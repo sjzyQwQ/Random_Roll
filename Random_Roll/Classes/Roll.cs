@@ -46,6 +46,7 @@ namespace Random_Roll.Classes
                 if (!rolled.ContainsKey(randonNumber) || rolled[randonNumber] != true)
                 {
                     names.Add(Persons[MappingId[randonNumber]].Name);
+                    Database.Record(Persons[MappingId[randonNumber]].Guid);
                     rolled[randonNumber] = true;
                 }
                 else

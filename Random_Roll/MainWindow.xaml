@@ -17,6 +17,11 @@
                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Home}"/>
                 </ui:NavigationViewItem.Icon>
             </ui:NavigationViewItem>
+            <ui:NavigationViewItem x:Name="NavigationViewItem_Statistic" Content="统计">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.History}"/>
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
         </ui:NavigationView.MenuItems>
         <ui:NavigationView.FooterMenuItems>
             <ui:NavigationViewItem x:Name="NavigationViewItem_Settings" Content="设置">

@@ -1,0 +1,23 @@
+﻿<ui:Page x:Class="Random_Roll.Pages.SettingsPages.Statistic"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+      xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
+      xmlns:local="clr-namespace:Random_Roll.Pages.SettingsPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ui:ScrollViewerEx>
+            <ikw:SimpleStackPanel Margin="24">
+                <ikw:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button x:Name="ClearStatistic_Button" Style="{StaticResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}" Margin="8" IsEnabled="False" Click="ClearStatistic_Button_Click">
+                        <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Delete}" Content="清空"/>
+                    </Button>
+                    <CheckBox x:Name="ComfirmClearStatistic" Content="危险操作，清空后将无法恢复！" Margin="8" Checked="ComfirmClearStatistic_Checked" Unchecked="ComfirmClearStatistic_Unchecked"/>
+                </ikw:SimpleStackPanel>
+            </ikw:SimpleStackPanel>
+        </ui:ScrollViewerEx>
+    </Grid>
+</ui:Page>

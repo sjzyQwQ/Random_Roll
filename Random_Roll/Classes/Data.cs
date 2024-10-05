@@ -6,8 +6,8 @@ namespace Random_Roll.Classes
     {
         readonly internal static SqliteConnection connection = new SqliteConnection("Data Source=Database.db");
 
-        // 创建数据库
-        internal static void CreateDatabase()
+        // 创建表 person
+        internal static void CreateTable_person()
         {
             connection.Open();
             SqliteCommand command = new SqliteCommand(@"
@@ -15,6 +15,21 @@ namespace Random_Roll.Classes
                 (
                     name TEXT,
                     guid TEXT
+                );
+                ", connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        // 创建表 statistic
+        internal static void CreateTable_statistic()
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(@"
+                CREATE TABLE IF NOT EXISTS statistic
+                (
+                    guid TEXT,
+                    timestamp TEXT
                 );
                 ", connection);
             command.ExecuteNonQuery();
@@ -58,6 +73,32 @@ namespace Random_Roll.Classes
             }
             connection.Close();
             return count;
+        }
+
+        // 写入统计
+        internal static void Record(string guid)
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(@"
+                INSERT INTO statistic (guid,timestamp)
+                VALUES ($guid,$timestamp);
+                ", connection);
+            command.Parameters.AddWithValue("$guid", guid);
+            command.Parameters.AddWithValue("$timestamp", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds());
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        // 清空表 statistic
+        internal static void ClearTable_Statistic()
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(@"
+                DELETE FROM statistic;
+                VACUUM;
+                ", connection);
+            command.ExecuteNonQuery();
+            connection.Close();
         }
     }
 

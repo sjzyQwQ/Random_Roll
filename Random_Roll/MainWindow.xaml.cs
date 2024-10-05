@@ -1,7 +1,5 @@
 ﻿using iNKORE.UI.WPF.Modern.Controls;
-using Microsoft.Data.Sqlite;
 using Random_Roll.Classes;
-using Random_Roll.Pages.SettingsPages;
 using System.Windows;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -16,14 +14,13 @@ namespace Random_Roll
         {
             InitializeComponent();
 
-            if (!System.IO.File.Exists(System.IO.Directory.GetCurrentDirectory() + "Databases.db"))
-            {
-                Database.CreateDatabase();
-            }
+            Database.CreateTable_person();
+            Database.CreateTable_statistic();
         }
 
         #region NavigationView_Root
         public Pages.Home Page_Home = new Pages.Home();
+        public Pages.Statistic Page_Statistic = new Pages.Statistic();
         public Pages.Settings Page_Settings = new Pages.Settings();
         public Pages.About Page_About = new Pages.About();
 
@@ -35,6 +32,10 @@ namespace Random_Roll
             if (item == NavigationViewItem_Home)
             {
                 page = Page_Home;
+            }
+            else if (item == NavigationViewItem_Statistic)
+            {
+                page = Page_Statistic;
             }
             else if (item == NavigationViewItem_Settings)
             {

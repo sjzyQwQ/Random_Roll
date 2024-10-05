@@ -17,14 +17,7 @@ namespace Random_Roll.Pages
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             int count = Database.GetCount();
-            if (count < 3)
-            {
-                Count.Maximum = 1;
-            }
-            else
-            {
-                Count.Maximum = Database.GetCount() - 1;
-            }
+            Count.Maximum = count < 2 ? 1 : count - 1;
         }
 
         // 避免手动输入小数（四舍五入）
@@ -43,7 +36,7 @@ namespace Random_Roll.Pages
             {
                 Roll roll = new Roll();
                 List<string> rolledName = roll.Start(Count.Value);
-                Statistics.Text = "本次抽选共" + Count.Text + "/" + Database.GetCount() + "人";
+                Statistic.Text = "本次抽选共" + Count.Text + "/" + Database.GetCount() + "人";
                 NameBlock.Text = string.Empty;
                 foreach (string name in rolledName)
                 {
@@ -53,7 +46,7 @@ namespace Random_Roll.Pages
             }
             else
             {
-                Statistics.Text = "本次抽选共0/0人";
+                Statistic.Text = "本次抽选共0/0人";
                 NameBlock.Text = "请到设置>管理添加姓名";
             }
         }

@@ -12,7 +12,7 @@
     <Grid>
         <ui:ScrollViewerEx Margin="0,0,0,64">
             <ikw:SimpleStackPanel Margin="16">
-                <TextBlock x:Name="Statistics" Text="请单击" FontSize="24" FontWeight="SemiBold"/>
+                <TextBlock x:Name="Statistic" Text="请单击" FontSize="24" FontWeight="SemiBold"/>
                 <TextBlock x:Name="NameBlock" Text="“开始抽选”" FontSize="36" FontWeight="Bold" TextWrapping="Wrap"/>
             </ikw:SimpleStackPanel>
         </ui:ScrollViewerEx>
