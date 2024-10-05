@@ -7,9 +7,10 @@
         xmlns:local="clr-namespace:Random_Roll"
         ui:WindowHelper.UseModernWindowStyle="True"
         ui:WindowHelper.SystemBackdropType="Mica"
+        ui:TitleBar.IsIconVisible="True"
         mc:Ignorable="d"
-        Title="随机点名器" Height="450" Width="800" MinHeight="365" MinWidth="650"
-        Loaded="Window_Loaded">
+        Title="随机点名器" Icon="/Assets/AppLogo.ico" Height="450" Width="800" MinHeight="365" MinWidth="650"
+        Loaded="Window_Loaded" StateChanged="Window_StateChanged">
     <ui:NavigationView x:Name="NavigationView_Root" IsPaneOpen="False" PaneDisplayMode="Auto" SelectionChanged="NavigationView_SelectionChanged">
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem x:Name="NavigationViewItem_Home" Content="主页">

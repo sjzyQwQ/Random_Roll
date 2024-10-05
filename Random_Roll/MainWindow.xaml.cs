@@ -1,5 +1,6 @@
 ﻿using iNKORE.UI.WPF.Modern.Controls;
 using Random_Roll.Classes;
+using System.ComponentModel;
 using System.Windows;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -52,11 +53,28 @@ namespace Random_Roll
                 Frame_Main.Navigate(page);
             }
         }
+        #endregion
+
+        FloatingWindow floatingWindow = new FloatingWindow();
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            Application.Current.Shutdown();
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             NavigationView_Root.SelectedItem = NavigationViewItem_Home;
         }
-        #endregion
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                floatingWindow.Show();
+                this.Hide();
+            }
+        }
     }
 }
