@@ -1,5 +1,7 @@
 ﻿using iNKORE.UI.WPF.Modern.Controls;
 using Random_Roll.Classes;
+using System.Windows;
+using System.Windows.Controls;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Random_Roll.Pages
@@ -37,17 +39,21 @@ namespace Random_Roll.Pages
                 Roll roll = new Roll();
                 List<string> rolledName = roll.Start(Count.Value);
                 Statistic.Text = "本次抽选共" + Count.Text + "/" + Database.GetCount() + "人";
-                NameBlock.Text = string.Empty;
+                NamePanel.Children.Clear();
                 foreach (string name in rolledName)
                 {
-                    NameBlock.Text += name;
-                    NameBlock.Text += " ";
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.Text = name;
+                    textBlock.FontSize = 36;
+                    textBlock.FontWeight = FontWeights.Bold;
+                    textBlock.Margin = new Thickness(0, 0, 8, 0);
+                    NamePanel.Children.Add(textBlock);
                 }
             }
             else
             {
                 Statistic.Text = "本次抽选共0/0人";
-                NameBlock.Text = "请到设置>管理添加姓名";
+                Tip.Text = "请到设置>管理添加姓名";
             }
         }
     }
