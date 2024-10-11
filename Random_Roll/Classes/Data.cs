@@ -1,7 +1,37 @@
 ﻿using Microsoft.Data.Sqlite;
+using System.IO;
+using System.Text.Json;
 
 namespace Random_Roll.Classes
 {
+    internal class Settings
+    {
+        public bool AlwaysOnTop { get; set; } = false;
+        public bool ConfirmBeforeClosing { get; set; } = true;
+
+        internal static async Task CreateSettingsFile()
+        {
+            if (!File.Exists("Settings.json"))
+            {
+                await File.WriteAllTextAsync("Settings.json", JsonSerializer.Serialize(new Settings(), new JsonSerializerOptions { WriteIndented = true }));
+            }
+            else
+            {
+                await File.WriteAllTextAsync("Settings.json", JsonSerializer.Serialize(GetSettings(), new JsonSerializerOptions { WriteIndented = true }));
+            }
+        }
+        internal async Task SaveSettingsFile()
+        {
+            await File.WriteAllTextAsync("Settings.json", JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true }));
+        }
+
+        internal static Settings GetSettings()
+        {
+            return JsonSerializer.Deserialize<Settings>(File.ReadAllText("Settings.json"));
+        }
+
+    }
+
     internal class Database
     {
         readonly internal static SqliteConnection connection = new SqliteConnection("Data Source=Database.db");
@@ -104,14 +134,7 @@ namespace Random_Roll.Classes
 
     internal class Person
     {
-        internal int Id { get; set; }
         internal string Name { get; set; }
         internal string Guid { get; set; }
-
-        internal Person(string name, string guid)
-        {
-            Name = name;
-            Guid = guid;
-        }
     }
 }

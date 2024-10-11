@@ -13,7 +13,13 @@ namespace Random_Roll.Pages
             InitializeComponent();
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            NavigationView_Settings.SelectedItem = NavigationViewItem_Settings_General;
+        }
+
         #region NavigationView_Settings
+        public Pages.SettingsPages.General Page_General = new SettingsPages.General();
         public Pages.SettingsPages.Management Page_Management = new SettingsPages.Management();
         public Pages.SettingsPages.Statistic Page_Statistic = new SettingsPages.Statistic();
 
@@ -22,7 +28,11 @@ namespace Random_Roll.Pages
             var item = sender.SelectedItem;
             Page? page = null;
 
-            if (item == NavigationViewItem_Settings_Management)
+            if (item == NavigationViewItem_Settings_General)
+            {
+                page = Page_General;
+            }
+            else if (item == NavigationViewItem_Settings_Management)
             {
                 page = Page_Management;
             }
@@ -36,11 +46,6 @@ namespace Random_Roll.Pages
                 NavigationView_Settings.Header = page.Title;
                 Frame_Settings.Navigate(page);
             }
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            NavigationView_Settings.SelectedItem = NavigationViewItem_Settings_Management;
         }
         #endregion
     }

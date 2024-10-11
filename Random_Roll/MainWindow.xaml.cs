@@ -15,6 +15,7 @@ namespace Random_Roll
         {
             InitializeComponent();
 
+            Settings.CreateSettingsFile();
             Database.CreateTable_person();
             Database.CreateTable_statistic();
         }
@@ -60,20 +61,38 @@ namespace Random_Roll
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            Application.Current.Shutdown();
+            if (Settings.GetSettings().ConfirmBeforeClosing)
+            {
+                e.Cancel = true;
+                MessageBoxResult messageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox.Show("确定关闭吗？点击“否”以最小化", "随机点名器", MessageBoxButton.YesNoCancel);
+                if (messageBox == MessageBoxResult.Yes)
+                {
+                    e.Cancel = false;
+                    Application.Current.Shutdown();
+                }
+                else if (messageBox == MessageBoxResult.No)
+                {
+                    WindowState = WindowState.Minimized;
+                }
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             NavigationView_Root.SelectedItem = NavigationViewItem_Home;
+            DataContext = Settings.GetSettings();
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == WindowState.Minimized)
+            if (WindowState == WindowState.Minimized)
             {
                 floatingWindow.Show();
-                this.Hide();
+                Hide();
             }
         }
     }

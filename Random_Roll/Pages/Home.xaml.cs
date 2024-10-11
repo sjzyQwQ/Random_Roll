@@ -20,6 +20,7 @@ namespace Random_Roll.Pages
         {
             int count = Database.GetCount();
             Count.Maximum = count < 2 ? 1 : count - 1;
+            roll = new Roll();
         }
 
         // 避免手动输入小数（四舍五入）
@@ -31,23 +32,25 @@ namespace Random_Roll.Pages
             }
         }
 
+        Roll roll;
+
         // 开始抽选
         private void Start_Roll_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (Database.GetCount() != 0)
             {
-                Roll roll = new Roll();
-                List<string> rolledName = roll.Start(Count.Value);
-                Statistic.Text = "本次抽选共" + Count.Text + "/" + Database.GetCount() + "人";
+                List<Person> rolledPerson = roll.Start(Count.Value);
+                Statistic.Text = $"本次抽选共{Count.Text}/{Database.GetCount()}人";
                 NamePanel.Children.Clear();
-                foreach (string name in rolledName)
+                foreach (Person person in rolledPerson)
                 {
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Text = name;
-                    textBlock.FontSize = 36;
-                    textBlock.FontWeight = FontWeights.Bold;
-                    textBlock.Margin = new Thickness(0, 0, 8, 0);
-                    NamePanel.Children.Add(textBlock);
+                    NamePanel.Children.Add(new TextBlock
+                    {
+                        Text = person.Name,
+                        FontSize = 36,
+                        FontWeight = FontWeights.Bold,
+                        Margin = new Thickness(0, 0, 8, 0)
+                    });
                 }
             }
             else

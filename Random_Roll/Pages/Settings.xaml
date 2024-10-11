@@ -12,6 +12,11 @@
     <Grid>
         <ui:NavigationView x:Name="NavigationView_Settings" IsPaneOpen="False" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" SelectionChanged="NavigationView_Settings_SelectionChanged">
             <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem x:Name="NavigationViewItem_Settings_General" Content="常规">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.DeveloperTools}"/>
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
                 <ui:NavigationViewItem x:Name="NavigationViewItem_Settings_Management" Content="管理">
                     <ui:NavigationViewItem.Icon>
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Manage}"/>

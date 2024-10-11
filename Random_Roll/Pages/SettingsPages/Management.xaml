@@ -12,7 +12,15 @@
     <Grid>
         <ui:ScrollViewerEx HorizontalScrollBarVisibility="Auto">
             <ikw:SimpleStackPanel Margin="24">
-                <ui:ListView x:Name="Names" SelectionMode="Extended" PreviewMouseWheel="UI_PreviewMouseWheel"/>
+                <ui:ListView x:Name="Names" SelectionMode="Extended" SelectionChanged="Names_SelectionChanged" PreviewMouseWheel="UI_PreviewMouseWheel">
+                    <ui:ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="Refresh_Context" Header="刷新" Click="Refresh_Click"/>
+                            <MenuItem x:Name="SelectAll_Context" Header="全选" Click="SelectAll_Click"/>
+                            <MenuItem x:Name="DeletePerson_Context" Header="删除" Click="DeletePerson_Click" IsEnabled="False"/>
+                        </ContextMenu>
+                    </ui:ListView.ContextMenu>
+                </ui:ListView>
                 <TextBox x:Name="NewPerson_Name" AcceptsReturn="true" Visibility="Collapsed" PreviewMouseWheel="UI_PreviewMouseWheel"/>
                 <ikw:SimpleStackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="NewPerson_Cancel_Button" Margin="8" Click="NewPerson_Cancel_Button_Click" Visibility="Collapsed">
@@ -24,13 +32,13 @@
                     <Button x:Name="NewPerson_Button" Margin="8" Click="NewPerson_Button_Click">
                         <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Add}" Content="添加"/>
                     </Button>
-                    <Button x:Name="Refresh_Button" Margin="8" Click="Refresh_Button_Click">
+                    <Button x:Name="Refresh_Button" Margin="8" Click="Refresh_Click">
                         <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Refresh}" Content="刷新"/>
                     </Button>
-                    <Button x:Name="SelectAll_Button" Margin="8" Click="SelectAll_Button_Click">
+                    <Button x:Name="SelectAll_Button" Margin="8" Click="SelectAll_Click">
                         <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.SelectAll}" Content="全选"/>
                     </Button>
-                    <Button x:Name="DeletePerson_Button" Style="{StaticResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}" Margin="8" Click="DeletePerson_Button_Click">
+                    <Button x:Name="DeletePerson_Button" Style="{StaticResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}" Margin="8" Click="DeletePerson_Click" IsEnabled="False">
                         <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Delete}" Content="删除"/>
                     </Button>
                 </ikw:SimpleStackPanel>

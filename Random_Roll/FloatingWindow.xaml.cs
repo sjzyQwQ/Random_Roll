@@ -1,8 +1,7 @@
-﻿using System.ComponentModel;
-using System.Runtime.InteropServices;
+﻿using Random_Roll.Classes;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 
 namespace Random_Roll
 {
@@ -22,7 +21,20 @@ namespace Random_Roll
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            Application.Current.Shutdown();
+            if (Settings.GetSettings().ConfirmBeforeClosing)
+            {
+                e.Cancel = true;
+                MessageBoxResult messageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox.Show("确定关闭随机点名器吗？", "随机点名器", MessageBoxButton.OKCancel);
+                if (messageBox == MessageBoxResult.OK)
+                {
+                    e.Cancel = false;
+                    Application.Current.Shutdown();
+                }
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         #region MouseEvent
@@ -45,7 +57,7 @@ namespace Random_Roll
                     {
                         window.Show();
                         window.WindowState = WindowState.Normal;
-                        this.Hide();
+                        Hide();
                     }
                 }
             }
@@ -59,7 +71,7 @@ namespace Random_Roll
                 if (Math.Abs(currentPosition.X - initialPosition.X) > 8 || Math.Abs(currentPosition.Y - initialPosition.Y) > 8)
                 {
                     isDragging = true;
-                    this.DragMove();
+                    DragMove();
                 }
             }
         }

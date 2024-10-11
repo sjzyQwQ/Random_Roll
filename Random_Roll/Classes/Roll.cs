@@ -14,18 +14,22 @@ namespace Random_Roll.Classes
             var dataReader = command.ExecuteReader();
             while (dataReader.Read())
             {
-                Person person = new Person(dataReader["name"].ToString(), dataReader["guid"].ToString());
+                Person person = new Person { Name = dataReader["name"].ToString(), Guid = dataReader["guid"].ToString() };
                 Persons.Add(person);
             }
             Database.connection.Close();
-            int randomId = GenerateRandomNumber(Persons.Count());
+            Dictionary<int, bool> usedId = new Dictionary<int, bool>();
             for (int i = 0; i < Persons.Count(); i++)
             {
-                Persons[i].Id = randomId;
-                MappingId[randomId] = i;
-                if (++randomId == Persons.Count())
+                int randomId = GenerateRandomNumber(Persons.Count());
+                if (!usedId.ContainsKey(randomId) || usedId[randomId] == false)
                 {
-                    randomId = 0;
+                    MappingId[randomId] = i;
+                    usedId[randomId] = true;
+                }
+                else
+                {
+                    --i;
                 }
             }
         }
@@ -33,28 +37,28 @@ namespace Random_Roll.Classes
         private int GenerateRandomNumber(int max)
         {
             Random r = new Random(Guid.NewGuid().GetHashCode());
-            return r.Next(1, max);
+            return r.Next(1, max + 1);
         }
 
-        internal List<string> Start(double count)
+        internal List<Person> Start(double count)
         {
-            List<string> names = new List<string>();
+            List<Person> person = new List<Person>();
             Dictionary<int, bool> rolled = new Dictionary<int, bool>();
             for (int i = 0; i < count; i++)
             {
-                int randonNumber = GenerateRandomNumber(Persons.Count());
-                if (!rolled.ContainsKey(randonNumber) || rolled[randonNumber] != true)
+                int randonId = GenerateRandomNumber(Persons.Count());
+                if (!rolled.ContainsKey(randonId) || rolled[randonId] == false)
                 {
-                    names.Add(Persons[MappingId[randonNumber]].Name);
-                    Database.Record(Persons[MappingId[randonNumber]].Guid);
-                    rolled[randonNumber] = true;
+                    person.Add(Persons[MappingId[randonId]]);
+                    Database.Record(Persons[MappingId[randonId]].Guid);
+                    rolled[randonId] = true;
                 }
                 else
                 {
                     --i;
                 }
             }
-            return names;
+            return person;
         }
     }
 }

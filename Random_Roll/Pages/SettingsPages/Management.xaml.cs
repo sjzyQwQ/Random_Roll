@@ -43,7 +43,7 @@ namespace Random_Roll.Pages.SettingsPages
         }
 
         // 删除
-        private async void DeletePerson_Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void DeletePerson_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             foreach (iNKORE.UI.WPF.Modern.Controls.ListViewItem item in Names.SelectedItems)
             {
@@ -51,17 +51,16 @@ namespace Random_Roll.Pages.SettingsPages
             }
             Names.Items.Clear();
             await ListPerson();
-
         }
 
         // 全选
-        private void SelectAll_Button_Click(object sender, RoutedEventArgs e)
+        private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
             Names.SelectAll();
         }
 
         // 刷新列表
-        private async void Refresh_Button_Click(object sender, RoutedEventArgs e)
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
             Names.Items.Clear();
             await ListPerson();
@@ -83,7 +82,7 @@ namespace Random_Roll.Pages.SettingsPages
             NewPerson_Cancel_Button.Visibility = Visibility.Collapsed;
             NewPerson_Name.Visibility = Visibility.Collapsed;
             NewPerson_Button.Visibility = Visibility.Visible;
-            foreach(string name in NewPerson_Name.Text.Split(Environment.NewLine))
+            foreach (string name in NewPerson_Name.Text.Split(Environment.NewLine))
             {
                 Database.NewPerson(name);
             }
@@ -100,6 +99,13 @@ namespace Random_Roll.Pages.SettingsPages
             NewPerson_Name.Visibility = Visibility.Collapsed;
             NewPerson_Button.Visibility = Visibility.Visible;
             NewPerson_Name.Text = string.Empty;
+        }
+
+        // 在未选择项目时禁用删除
+        private void Names_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DeletePerson_Button.IsEnabled = Convert.ToBoolean(Names.SelectedItems.Count);
+            DeletePerson_Context.IsEnabled = Convert.ToBoolean(Names.SelectedItems.Count);
         }
 
         // 解决因SimpleStackPanel(ui)嵌套ListView(ui)和TextBox导致滚轮事件失效的问题
