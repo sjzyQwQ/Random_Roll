@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Win32;
 using Random_Roll.Classes;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -129,13 +130,20 @@ namespace Random_Roll.Pages.SettingsPages
         // 更换头像
         private void ChangeAvatar_Context_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog { Filter = "PNG|*.png", Title = "更换头像" };
+            OpenFileDialog openFileDialog = new OpenFileDialog { Filter = "PNG|*.png|JPEG|*.jpg;*.jpeg;*.jpe;*.jiff", Title = "更换头像" };
             if (openFileDialog.ShowDialog() == true)
             {
                 if (iNKORE.UI.WPF.Modern.Controls.MessageBox.Show("确定要更换吗？", "更换头像", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     iNKORE.UI.WPF.Modern.Controls.ListViewItem listViewItem = Names.SelectedItem as iNKORE.UI.WPF.Modern.Controls.ListViewItem;
-                    System.IO.File.Copy(openFileDialog.FileName, $"Avatars/{listViewItem.Tag.ToString().Replace("_", "-")}.png", true);
+                    foreach (string file in Directory.GetFiles("Avatars", $"{listViewItem.Tag.ToString().Replace("_", "-")}*"))
+                    {
+                        if (Path.GetExtension(file) != Path.GetExtension(openFileDialog.FileName))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    File.Copy(openFileDialog.FileName, $"Avatars/{listViewItem.Tag.ToString().Replace("_", "-")}{Path.GetExtension(openFileDialog.FileName)}", true);
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using iNKORE.UI.WPF.Modern.Controls;
 using Random_Roll.Classes;
 using Random_Roll.Controls;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -63,7 +64,14 @@ namespace Random_Roll.Pages
                     {
                         BitmapImage bitmapImage = new BitmapImage();
                         bitmapImage.BeginInit();
-                        bitmapImage.UriSource = new Uri(System.IO.File.Exists($"Avatars/{person.Guid}.png") ? $"Avatars/{person.Guid}.png" : "pack://application:,,,/Random_Roll;component/Assets/defaultAvatar.png", UriKind.RelativeOrAbsolute);
+                        if (Convert.ToBoolean(Directory.GetFiles("Avatars", $"{person.Guid}*").Length))
+                        {
+                            bitmapImage.UriSource = new Uri(Directory.GetFiles("Avatars", $"{person.Guid}*")[0], UriKind.Relative);
+                        }
+                        else
+                        {
+                            bitmapImage.UriSource = new Uri("pack://application:,,,/Random_Roll;component/Assets/defaultAvatar.png", UriKind.Absolute);
+                        }
                         bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                         bitmapImage.EndInit();
                         NamePanel.Children.Add(new PersonCard { Avatar = bitmapImage, Name = person.Name, Margin = new Thickness(0, 0, 8, 8) });
