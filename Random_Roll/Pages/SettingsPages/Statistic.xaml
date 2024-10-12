@@ -15,7 +15,7 @@
                     <Button x:Name="ClearStatistic_Button" Style="{StaticResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}" Margin="8" IsEnabled="False" Click="ClearStatistic_Button_Click">
                         <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.Delete}" Content="清空"/>
                     </Button>
-                    <CheckBox x:Name="ComfirmClearStatistic" Content="危险操作，清空后将无法恢复！" Margin="8" Checked="ComfirmClearStatistic_Checked" Unchecked="ComfirmClearStatistic_Unchecked"/>
+                    <CheckBox x:Name="ConfirmClearStatistic" Content="危险操作，清空后将无法恢复！" Margin="8" Checked="ConfirmClearStatistic_IsCheckedChanged" Unchecked="ConfirmClearStatistic_IsCheckedChanged"/>
                 </ikw:SimpleStackPanel>
             </ikw:SimpleStackPanel>
         </ui:ScrollViewerEx>

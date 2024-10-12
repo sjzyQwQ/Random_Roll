@@ -1,7 +1,9 @@
 ﻿using iNKORE.UI.WPF.Modern.Controls;
 using Random_Roll.Classes;
+using Random_Roll.Controls;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Random_Roll.Pages
@@ -42,15 +44,31 @@ namespace Random_Roll.Pages
                 List<Person> rolledPerson = roll.Start(Count.Value);
                 Statistic.Text = $"本次抽选共{Count.Text}/{Database.GetCount()}人";
                 NamePanel.Children.Clear();
-                foreach (Person person in rolledPerson)
+                if (!Classes.Settings.GetSettings().EnableAvatar)
                 {
-                    NamePanel.Children.Add(new TextBlock
+                    foreach (Person person in rolledPerson)
                     {
-                        Text = person.Name,
-                        FontSize = 36,
-                        FontWeight = FontWeights.Bold,
-                        Margin = new Thickness(0, 0, 8, 0)
-                    });
+                        NamePanel.Children.Add(new TextBlock
+                        {
+                            Text = person.Name,
+                            FontSize = 36,
+                            FontWeight = FontWeights.Bold,
+                            Margin = new Thickness(0, 0, 8, 0)
+                        });
+                    }
+                }
+                else
+                {
+                    foreach (Person person in rolledPerson)
+                    {
+                        BitmapImage bitmapImage = new BitmapImage();
+                        bitmapImage.BeginInit();
+                        bitmapImage.UriSource = new Uri(System.IO.File.Exists($"Avatars/{person.Guid}.png") ? $"Avatars/{person.Guid}.png" : "pack://application:,,,/Random_Roll;component/Assets/defaultAvatar.png", UriKind.RelativeOrAbsolute);
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.EndInit();
+                        NamePanel.Children.Add(new PersonCard { Avatar = bitmapImage, Name = person.Name, Margin = new Thickness(0, 0, 8, 8) });
+                        bitmapImage.Freeze();
+                    }
                 }
             }
             else

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using Microsoft.Win32;
 using Random_Roll.Classes;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,8 +18,10 @@ namespace Random_Roll.Pages.SettingsPages
             InitializeComponent();
         }
 
+
         private async void Management_Loaded(object sender, RoutedEventArgs e)
         {
+            DataContext = Classes.Settings.GetSettings();
             if (Names.Items.Count == 0)
             {
                 await ListPerson();
@@ -101,11 +104,12 @@ namespace Random_Roll.Pages.SettingsPages
             NewPerson_Name.Text = string.Empty;
         }
 
-        // 在未选择项目时禁用删除
+        // 在未选择项目时禁用部分功能
         private void Names_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DeletePerson_Button.IsEnabled = Convert.ToBoolean(Names.SelectedItems.Count);
             DeletePerson_Context.IsEnabled = Convert.ToBoolean(Names.SelectedItems.Count);
+            ChangeAvatar_Context.IsEnabled = Names.SelectedItems.Count == 1;
         }
 
         // 解决因SimpleStackPanel(ui)嵌套ListView(ui)和TextBox导致滚轮事件失效的问题
@@ -119,6 +123,20 @@ namespace Random_Roll.Pages.SettingsPages
                 eventArg.Source = sender;
                 var parent = ((Control)sender).Parent as UIElement;
                 parent.RaiseEvent(eventArg);
+            }
+        }
+
+        // 更换头像
+        private void ChangeAvatar_Context_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog { Filter = "PNG|*.png", Title = "更换头像" };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                if (iNKORE.UI.WPF.Modern.Controls.MessageBox.Show("确定要更换吗？", "更换头像", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    iNKORE.UI.WPF.Modern.Controls.ListViewItem listViewItem = Names.SelectedItem as iNKORE.UI.WPF.Modern.Controls.ListViewItem;
+                    System.IO.File.Copy(openFileDialog.FileName, $"Avatars/{listViewItem.Tag.ToString().Replace("_", "-")}.png", true);
+                }
             }
         }
     }

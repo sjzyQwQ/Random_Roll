@@ -18,6 +18,11 @@ namespace Random_Roll
             Settings.CreateSettingsFile();
             Database.CreateTable_person();
             Database.CreateTable_statistic();
+
+            if (!System.IO.Directory.Exists("Avatars"))
+            {
+                System.IO.Directory.CreateDirectory("Avatars");
+            }
         }
 
         #region NavigationView_Root

@@ -8,6 +8,7 @@ namespace Random_Roll.Classes
     {
         public bool AlwaysOnTop { get; set; } = false;
         public bool ConfirmBeforeClosing { get; set; } = true;
+        public bool EnableAvatar { get; set; } = false;
 
         internal static async Task CreateSettingsFile()
         {

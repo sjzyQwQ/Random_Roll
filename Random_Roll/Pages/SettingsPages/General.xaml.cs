@@ -34,6 +34,10 @@ namespace Random_Roll.Pages.SettingsPages
                 {
                     settings.ConfirmBeforeClosing = (bool)checkBox.IsChecked;
                 }
+                else if (checkBox.Name == "EnableAvatar")
+                {
+                    settings.EnableAvatar = (bool)checkBox.IsChecked;
+                }
                 settings.SaveSettingsFile();
             }
         }

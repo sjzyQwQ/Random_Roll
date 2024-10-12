@@ -14,6 +14,7 @@
             <ikw:SimpleStackPanel Margin="24">
                 <CheckBox x:Name="AlwaysOnTop" Content="置于顶层" IsChecked="{Binding AlwaysOnTop}" Checked="CheckBox_IsCheckedChanged" Unchecked="CheckBox_IsCheckedChanged"/>
                 <CheckBox x:Name="ConfirmBeforeClosing" Content="关闭前确认" IsChecked="{Binding ConfirmBeforeClosing}" Checked="CheckBox_IsCheckedChanged" Unchecked="CheckBox_IsCheckedChanged"/>
+                <CheckBox x:Name="EnableAvatar" Content="头像支持" IsChecked="{Binding EnableAvatar}" Checked="CheckBox_IsCheckedChanged" Unchecked="CheckBox_IsCheckedChanged"/>
             </ikw:SimpleStackPanel>
         </ui:ScrollViewerEx>
     </Grid>

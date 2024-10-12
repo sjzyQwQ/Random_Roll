@@ -15,6 +15,7 @@
                 <ui:ListView x:Name="Names" SelectionMode="Extended" SelectionChanged="Names_SelectionChanged" PreviewMouseWheel="UI_PreviewMouseWheel">
                     <ui:ListView.ContextMenu>
                         <ContextMenu>
+                            <MenuItem x:Name="ChangeAvatar_Context" Header="更换头像" Click="ChangeAvatar_Context_Click" IsEnabled="False"/>
                             <MenuItem x:Name="Refresh_Context" Header="刷新" Click="Refresh_Click"/>
                             <MenuItem x:Name="SelectAll_Context" Header="全选" Click="SelectAll_Click"/>
                             <MenuItem x:Name="DeletePerson_Context" Header="删除" Click="DeletePerson_Click" IsEnabled="False"/>
